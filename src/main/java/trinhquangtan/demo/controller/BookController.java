@@ -3,15 +3,16 @@ package trinhquangtan.demo.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import trinhquangtan.demo.enity.Book;
 import trinhquangtan.demo.services.BookService;
 import trinhquangtan.demo.services.CategoryService;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+
+import static java.util.spi.ToolProvider.findFirst;
 
 @Controller
 @RequestMapping("/books")
@@ -38,6 +39,35 @@ public class BookController {
     public String addBook(@ModelAttribute("book") Book book)
     {
         bookService.addBook(book);
+        return "redirect:/books";
+    }
+    @GetMapping("/delete/{id}")
+    public  String deleteBook(@PathVariable("id") Long id)
+    {
+        Book book = bookService.getBookById(id);
+        bookService.deleteBook(id);
+        return "redirect:/books";
+    }
+    @GetMapping("/edit/{id}")
+    public String editBookForm(@PathVariable("id") Long id,Model model)
+    {
+        Optional<Book> book = bookService.getAllBooks().stream().filter(books ->Objects.equals(books.getId(), id))
+                .findFirst();
+        if (book.isPresent())
+        {
+            model.addAttribute("book",book.get());
+            return "book/edit";
+        }else {
+            return "not found";
+        }
+    }
+    @PostMapping("/edit")
+    public String editBook(@ModelAttribute("book") Book updatedBook)
+    {
+        bookService.getAllBooks().stream()
+                .filter(book -> book.getId() == updatedBook.getId())
+                .findFirst()
+                .ifPresent(book -> book.setId(book.getId()));
         return "redirect:/books";
     }
 }
