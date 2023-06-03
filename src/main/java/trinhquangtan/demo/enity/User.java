@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import trinhquangtan.demo.Validator.annotation.ValidUsername;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ public class User {
     @Column(name = "username", length = 50, nullable = false, unique = true)
     @NotBlank(message = "Username cần phải nhập")
     @Size(max = 50, message = "Username cần phải ít nhất 50 kí tự")
-    //@ValidUsername
+    @ValidUsername
     private  String username;
 
     @Column(name = "password", length = 250, nullable = false)

@@ -2,7 +2,9 @@ package trinhquangtan.demo.enity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-    @Data
+import trinhquangtan.demo.Validator.annotation.ValidUserId;
+
+@Data
     @Entity
     @Table(name = "book")
     public class Book{
@@ -69,4 +71,9 @@ import lombok.Data;
         @ManyToOne
         @JoinColumn(name = "category_id")
         private Category category;
+
+        @ManyToOne
+        @JoinColumn(name = "user_id", referencedColumnName = "id")
+        @ValidUserId
+        private User user;
     }

@@ -1,10 +1,8 @@
 package trinhquangtan.demo.Validator.annotation;
 
-import trinhquangtan.demo.Validator.*;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
-import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
@@ -12,11 +10,12 @@ import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-@Target({TYPE,FIELD})
+@Target({TYPE, FIELD})
 @Retention(RUNTIME)
-@Constraint(validatedBy = ValidUsernameValidator.class)
-public @interface ValidUsername {
-    String message() default "username already exits";
+@Constraint(validatedBy = ValidUserIdValidator.class)
+public @interface ValidUserId {
+    String message() default "Invaild User ID";
     Class<?>[] groups() default {};
-    Class<? extends  Payload>[] payload() default {};
+    Class<? extends Payload>[] payload() default {};
+
 }
