@@ -9,9 +9,12 @@ import java.util.Collections;
 
 public class CustomUserDetail implements UserDetails {
     private final User user;
+    private final IUserRepository userRepository;
+
     public CustomUserDetail(User user, IUserRepository userRepository)
     {
         this.user = user;
+        this.userRepository = userRepository;
     }
 
     @Override
