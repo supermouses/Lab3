@@ -9,7 +9,9 @@ import lombok.Data;
 import trinhquangtan.demo.Validator.annotation.ValidUsername;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -38,6 +40,11 @@ public class User {
     @Size(max = 50, message = "tên của bạn cần phải ít nhất 50 kí tự")
     @NotBlank(message = "Tên cần phải được điền")
     private String name;
+    @ManyToMany
+    @JoinTable(name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+            private Set<Role> roles = new HashSet<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Book> books = new ArrayList<>();
